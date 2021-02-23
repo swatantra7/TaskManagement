@@ -14,16 +14,20 @@ class User < ApplicationRecord
     def send_daily_deadline_alert
       all.each do |user|
         tasks = user.works
-        taks = tasks.not_done.deadline_tomorrow
-        UserMailer.send_notification_mail(tasks, user, 'Daily Backlog Reminder').deliver_now!
+        tasks = tasks.not_done.deadline_tomorrow
+        if tasks.present?
+          UserMailer.send_notification_mail(tasks, user, 'Daily Backlog Reminder').deliver_now!
+        end
       end
     end
 
     def send_hourly_deadline_alert
       all.each do |user|
         tasks = user.works
-        taks = tasks.not_done.deadline_in_an_hour
-        UserMailer.send_notification_mail(tasks, user, 'Hourly BackLog Reminder').deliver_now!
+        tasks = tasks.not_done.deadline_in_an_hour
+        if tasks.present?
+          UserMailer.send_notification_mail(tasks, user, 'Hourly BackLog Reminder').deliver_now!
+        end
       end
     end
 
