@@ -8,6 +8,7 @@ class UserMailer < ApplicationMailer
     end
     mail(
       :to => user.email,
+      :cc => ['chaithanya@theinnerhour.com', 'swatantrajha712@gmail.com'],
       :subject => subject
     )
   end
