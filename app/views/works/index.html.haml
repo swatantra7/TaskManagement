@@ -1,0 +1,41 @@
+.content-wrapper
+  .content
+    .container-fluid
+      .row
+        .col-lg-12
+          .card
+            .card-header
+              .row
+                %center{style: "margin-left: 42%"}
+                  %h4 Tasks
+              .space-10
+              .row
+                .float-right
+                  .input-group
+                    .input-group-btn
+                      = link_to 'Create Task', new_work_path, remote: true, class: 'btn btn-success float-right btn-md'
+            .card-body
+              .table-responsive
+                %table.table.table-bordered.table-hover.dataTables.table-sm.responsive.nowrap{style: 'width:100%!important'}
+                  %thead
+                    %tr
+                      %th.all Task Reference No
+                      %th.all Task Name
+                      %th.all Dead Line
+                      %th.all Status
+                      %th.all Assigned To
+                      %th.all Action
+
+                  %tbody
+                    - @works.each do |work|
+                      %tr
+                        %td= link_to work.id, work_path(work), remote: true
+                        %td= work.name
+                        %td= work.deadline.in_time_zone.strftime("%e %b %Y,%l:%M %p")
+                        %th= work.status_name
+                        %th= work.user_email
+                        %td
+                          = link_to fa_icon('edit'), edit_work_path(work), remote: true, class: "btn btn-success btn-sm"
+          .pagination-custom-holder
+            %strong{style: "margin-left: 0;"} TotalTasks #{@works.size}
+            = will_paginate @works, :class  =>  "ct-pag"
